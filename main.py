@@ -95,3 +95,35 @@ class KPApi:
         if response.status_code in [200, 401, 429]:
             return response.json()
         return {'code': response.status_code, 'error': 'External api error'}
+
+    def reviews(self, id, page=1):
+        response = requests.get(BASE_URL + V1 + f'reviews',
+                                headers=self._headers,
+                                params={'filmId': id, 'page': page})
+        if response.status_code in [200, 401, 429]:
+            return response.json()
+        return {'code': response.status_code, 'error': 'External api error'}
+
+    def review_details(self, id):
+        response = requests.get(BASE_URL + V1 + f'reviews/details',
+                                headers=self._headers,
+                                params={'reviewId': id})
+        if response.status_code in [200, 401, 429]:
+            return response.json()
+        return {'code': response.status_code, 'error': 'External api error'}
+
+    def staff(self, id):
+        response = requests.get(BASE_URL + V1 + f'staff',
+                                headers=self._headers,
+                                params={'filmId': id})
+        if response.status_code in [200, 401, 429]:
+            return response.json()
+        return {'code': response.status_code, 'error': 'External api error'}
+
+    def collections(self, list_type='BEST_FILMS_LIST', list_id=0):
+        response = requests.get(BASE_URL + V1 + f'collections/films',
+                                headers=self._headers,
+                                params={'listType': list_type, 'listId': list_id})
+        if response.status_code in [200, 401, 429]:
+            return response.json()
+        return {'code': response.status_code, 'error': 'External api error'}

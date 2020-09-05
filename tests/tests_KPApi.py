@@ -108,7 +108,7 @@ class TestKPApi(unittest.TestCase):
 
     def test_api_top_return_401_with_wrong_token(self):
         api = KPApi('wrong token')
-        response = api.top('301')
+        response = api.top()
         self.assertEqual(response['status'], 401)
 
     def test_api_releases_return_valid_data(self):
@@ -120,4 +120,61 @@ class TestKPApi(unittest.TestCase):
     def test_api_releases_return_401_with_wrong_token(self):
         api = KPApi('wrong token')
         response = api.releases(2019, 'JANUARY')
+        self.assertEqual(response['status'], 401)
+
+    def test_api_reviews_return_valid_data(self):
+        response = self.api.reviews(301)
+        self.assertIn('page', response)
+        self.assertIn('filmId', response)
+        self.assertIn('reviewAllCount', response)
+        self.assertIn('reviewAllPositiveRatio', response)
+        self.assertIn('reviewPositiveCount', response)
+        self.assertIn('reviewNegativeCount', response)
+        self.assertIn('reviewNeutralCount', response)
+        self.assertIn('pagesCount', response)
+        self.assertIn('reviews', response)
+
+    def test_api_reviews_return_401_with_wrong_token(self):
+        api = KPApi('wrong token')
+        response = api.reviews(301)
+        self.assertEqual(response['status'], 401)
+
+    def test_api_review_details_return_valid_data(self):
+        response = self.api.review_details(2930852)
+        self.assertIn('reviewId', response)
+        self.assertIn('reviewType', response)
+        self.assertIn('reviewData', response)
+        self.assertIn('userPositiveRating', response)
+        self.assertIn('userNegativeRating', response)
+        self.assertIn('reviewAutor', response)
+        self.assertIn('reviewTitle', response)
+        self.assertIn('reviewDescription', response)
+
+    def test_api_review_details_return_401_with_wrong_token(self):
+        api = KPApi('wrong token')
+        response = api.review_details(2930852)
+        self.assertEqual(response['status'], 401)
+
+    def test_api_staff_return_valid_data(self):
+        response = self.api.staff(301)
+        self.assertIn('staffId', response[0])
+        self.assertIn('nameRu', response[0])
+        self.assertIn('nameEn', response[0])
+        self.assertIn('posterUrl', response[0])
+        self.assertIn('professionText', response[0])
+        self.assertIn('professionKey', response[0])
+
+    def test_api_staff_return_401_with_wrong_token(self):
+        api = KPApi('wrong token')
+        response = api.staff(301)
+        self.assertEqual(response['status'], 401)
+
+    def test_api_collections_return_valid_data(self):
+        response = self.api.collections()
+        self.assertIn('listType', response)
+        self.assertIn('items', response)
+
+    def test_api_collections_return_401_with_wrong_token(self):
+        api = KPApi('wrong token')
+        response = api.collections()
         self.assertEqual(response['status'], 401)
