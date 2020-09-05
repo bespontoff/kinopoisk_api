@@ -13,30 +13,30 @@ class KPApi:
         self._token = token
         self._headers = {'X-API-KEY': self._token}
 
-    def films(self, id, append_to_response=''):
-        response = requests.get(BASE_URL + V2 + f'films/{id}',
+    def films(self, kp_id, append_to_response=''):
+        response = requests.get(BASE_URL + V2 + f'films/{kp_id}',
                                 params={'append_to_response': append_to_response},
                                 headers=self._headers)
         if response.status_code in [200, 401, 429]:
             return response.json()
         return {'code': response.status_code, 'error': 'External api error'}
 
-    def frames(self, id):
-        response = requests.get(BASE_URL + V2 + f'films/{id}/frames',
+    def frames(self, kp_id):
+        response = requests.get(BASE_URL + V2 + f'films/{kp_id}/frames',
                                 headers=self._headers)
         if response.status_code in [200, 401, 429]:
             return response.json()
         return {'code': response.status_code, 'error': 'External api error'}
 
-    def videos(self, id):
-        response = requests.get(BASE_URL + V2 + f'films/{id}/videos',
+    def videos(self, kp_id):
+        response = requests.get(BASE_URL + V2 + f'films/{kp_id}/videos',
                                 headers=self._headers)
         if response.status_code in [200, 401, 429]:
             return response.json()
         return {'code': response.status_code, 'error': 'External api error'}
 
-    def studios(self, id):
-        response = requests.get(BASE_URL + V2 + f'films/{id}/studios',
+    def studios(self, kp_id):
+        response = requests.get(BASE_URL + V2 + f'films/{kp_id}/studios',
                                 headers=self._headers)
         if response.status_code in [200, 401, 429]:
             return response.json()
@@ -96,26 +96,26 @@ class KPApi:
             return response.json()
         return {'code': response.status_code, 'error': 'External api error'}
 
-    def reviews(self, id, page=1):
+    def reviews(self, kp_id, page=1):
         response = requests.get(BASE_URL + V1 + f'reviews',
                                 headers=self._headers,
-                                params={'filmId': id, 'page': page})
+                                params={'filmId': kp_id, 'page': page})
         if response.status_code in [200, 401, 429]:
             return response.json()
         return {'code': response.status_code, 'error': 'External api error'}
 
-    def review_details(self, id):
+    def review_details(self, kp_id):
         response = requests.get(BASE_URL + V1 + f'reviews/details',
                                 headers=self._headers,
-                                params={'reviewId': id})
+                                params={'reviewId': kp_id})
         if response.status_code in [200, 401, 429]:
             return response.json()
         return {'code': response.status_code, 'error': 'External api error'}
 
-    def staff(self, id):
+    def staff(self, kp_id):
         response = requests.get(BASE_URL + V1 + f'staff',
                                 headers=self._headers,
-                                params={'filmId': id})
+                                params={'filmId': kp_id})
         if response.status_code in [200, 401, 429]:
             return response.json()
         return {'code': response.status_code, 'error': 'External api error'}
