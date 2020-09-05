@@ -45,7 +45,7 @@ class KPApi:
     def search_by_keyword(self, keyword, page=1):
         response = requests.get(BASE_URL + V2 + f'films/search-by-keyword',
                                 headers=self._headers,
-                                params={'keyword': 'Матрица', 'page': page})
+                                params={'keyword': keyword, 'page': page})
         if response.status_code in [200, 401, 429]:
             return response.json()
         return {'code': response.status_code, 'error': 'External api error'}
