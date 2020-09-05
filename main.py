@@ -1,8 +1,6 @@
 # -*- coding: UTF-8 -*-
 __author__ = 'bespontoff'
 
-import os
-
 import requests
 
 BASE_URL = 'https://kinopoiskapiunofficial.tech/api/'
@@ -44,4 +42,56 @@ class KPApi:
             return response.json()
         return {'code': response.status_code, 'error': 'External api error'}
 
+    def search_by_keyword(self, keyword, page=1):
+        response = requests.get(BASE_URL + V2 + f'films/search-by-keyword',
+                                headers=self._headers,
+                                params={'keyword': 'Матрица', 'page': page})
+        if response.status_code in [200, 401, 429]:
+            return response.json()
+        return {'code': response.status_code, 'error': 'External api error'}
 
+    def filters(self):
+        response = requests.get(BASE_URL + V2 + f'films/filters',
+                                headers=self._headers)
+        if response.status_code in [200, 401, 429]:
+            return response.json()
+        return {'code': response.status_code, 'error': 'External api error'}
+
+    def search_by_filters(self,
+                          country='',
+                          genre='',
+                          order='RATING',
+                          rating_from=0,
+                          rating_to=10,
+                          year_from=1988,
+                          year_to=2020,
+                          page=1):
+        response = requests.get(BASE_URL + V2 + f'films/search-by-filters',
+                                headers=self._headers,
+                                params={'country': country,
+                                        'genre': genre,
+                                        'order': order,
+                                        'ratingFrom': rating_from,
+                                        'ratingTo': rating_to,
+                                        'yearFrom': year_from,
+                                        'yearTo': year_to,
+                                        'page': page})
+        if response.status_code in [200, 401, 429]:
+            return response.json()
+        return {'code': response.status_code, 'error': 'External api error'}
+
+    def top(self, type_='BEST_FILMS_LIST', page=1, list_id=1):
+        response = requests.get(BASE_URL + V2 + f'films/top',
+                                headers=self._headers,
+                                params={'type': type_, 'page': page, 'listId': list_id})
+        if response.status_code in [200, 401, 429]:
+            return response.json()
+        return {'code': response.status_code, 'error': 'External api error'}
+
+    def releases(self, year, month, page=1):
+        response = requests.get(BASE_URL + V2 + f'films/releases',
+                                headers=self._headers,
+                                params={'year': year, 'month': month, 'page': page})
+        if response.status_code in [200, 401, 429]:
+            return response.json()
+        return {'code': response.status_code, 'error': 'External api error'}

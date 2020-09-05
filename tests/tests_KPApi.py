@@ -69,3 +69,55 @@ class TestKPApi(unittest.TestCase):
         response = api.studios('301')
         self.assertEqual(response['status'], 401)
 
+    def test_api_search_by_keyword_return_valid_data(self):
+        response = self.api.search_by_keyword('Матрица')
+        self.assertIn('keyword', response)
+        self.assertIn('pagesCount', response)
+        self.assertIn('searchFilmsCountResult', response)
+        self.assertIn('films', response)
+
+    def test_api_search_by_keyword_return_401_with_wrong_token(self):
+        api = KPApi('wrong token')
+        response = api.search_by_keyword('Матрица')
+        self.assertEqual(response['status'], 401)
+
+    def test_api_filters_return_valid_data(self):
+        response = self.api.filters()
+        self.assertIn('genres', response)
+        self.assertIn('countries', response)
+
+    def test_api_filters_return_401_with_wrong_token(self):
+        api = KPApi('wrong token')
+        response = api.filters()
+        self.assertEqual(response['status'], 401)
+
+    def test_api_search_by_filters_return_valid_data(self):
+        response = self.api.search_by_filters()
+        self.assertIn('pagesCount', response)
+        self.assertIn('films', response)
+
+    def test_api_search_by_filters_return_401_with_wrong_token(self):
+        api = KPApi('wrong token')
+        response = api.search_by_filters()
+        self.assertEqual(response['status'], 401)
+
+    def test_api_top_return_valid_data(self):
+        response = self.api.top()
+        self.assertIn('pagesCount', response)
+        self.assertIn('films', response)
+
+    def test_api_top_return_401_with_wrong_token(self):
+        api = KPApi('wrong token')
+        response = api.top('301')
+        self.assertEqual(response['status'], 401)
+
+    def test_api_releases_return_valid_data(self):
+        response = self.api.releases(2019, 'JANUARY')
+        self.assertIn('page', response)
+        self.assertIn('total', response)
+        self.assertIn('releases', response)
+
+    def test_api_releases_return_401_with_wrong_token(self):
+        api = KPApi('wrong token')
+        response = api.releases(2019, 'JANUARY')
+        self.assertEqual(response['status'], 401)
